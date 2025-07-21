@@ -149,18 +149,21 @@ void RibbonMainWindow::createMenus()
 	auto fp = c2->addPannel(QStringLiteral(""));
 
     auto btn1 = new QAction("hello", this);
-	auto bb = fp->addMediumAction(btn1);
+	auto bb = fp->addSmallAction(btn1);
     bb->setArrowType(Qt::DownArrow);
     //bb->setFixedWidth(100);
 
     btn1 = new QAction("world", this);
     QIcon icon36;
-    icon36.addFile(QString::fromUtf8(":/images/appicon_64.png"), QSize(8,8), QIcon::Normal,
+    icon36.addFile(QString::fromUtf8(":/appicon_64.png"), QSize(), QIcon::Normal,
         QIcon::On);
 	btn1->setIcon(icon36);
 
     auto cc = fp->addLargeAction(btn1);
     cc->setFixedWidth(100);
+
+	auto c3 = ribbon->addCategoryPage(QStringLiteral("View"));
+	auto c4 = ribbon->addCategoryPage(QStringLiteral("Help"));
 
     //bb->setStyleSheet("hover:{background-color: yellow;}");
 }

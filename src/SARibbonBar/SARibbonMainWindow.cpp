@@ -28,7 +28,7 @@ public:
 SARibbonMainWindowPrivate::SARibbonMainWindowPrivate(SARibbonMainWindow *p)
     : Parent(p)
 	, ribbonBar(nullptr)
-    , currentRibbonTheme(SARibbonMainWindow::NormalTheme)
+    , currentRibbonTheme(SARibbonMainWindow::Office2013)
 	, windowButtonGroup(nullptr)
     , pFramelessHelper(nullptr)
     , useRibbon(true)
