@@ -98,5 +98,19 @@
         <file>themes/Titlebar_Normal.png</file>
         <file>themes/Titlebar_Shade.png</file>
         <file>themes/Titlebar_Unshade.png</file>
+        <file>image/resource/ArrowDown.png</file>
+        <file>image/resource/ArrowMore.png</file>
+        <file>image/resource/ArrowUp.png</file>
+        <file>image/resource/close.png</file>
+        <file>image/resource/maximize.png</file>
+        <file>image/resource/minimize.png</file>
+        <file>image/resource/ribbonPannelOptionButton.png</file>
+        <file>image/resource/Titlebar_Close.png</file>
+        <file>image/resource/Titlebar_Close_Hover.png</file>
+        <file>image/resource/Titlebar_Max.png</file>
+        <file>image/resource/Titlebar_Min.png</file>
+        <file>image/resource/Titlebar_Normal.png</file>
+        <file>image/resource/Titlebar_Shade.png</file>
+        <file>image/resource/Titlebar_Unshade.png</file>
     </qresource>
 </RCC>
