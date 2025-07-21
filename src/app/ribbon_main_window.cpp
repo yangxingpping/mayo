@@ -61,8 +61,9 @@ RibbonMainWindow::RibbonMainWindow(GuiApplication* guiApp, QWidget* parent)
 
     // WidgetMainControl page depends on some Command objects, ensure they have been created beforehand
     for (auto [code, page] : m_mapWidgetPage)
-        page->initialize(&m_cmdContainer);
-
+    {
+        //page->initialize(&m_cmdContainer); TBD
+    }
     AppModule::get()->signalMessage.connectSlot(&RibbonMainWindow::onMessage, this);
     guiApp->signalGuiDocumentAdded.connectSlot(&RibbonMainWindow::onGuiDocumentAdded, this);
     guiApp->signalGuiDocumentErased.connectSlot(&RibbonMainWindow::onGuiDocumentErased, this);
