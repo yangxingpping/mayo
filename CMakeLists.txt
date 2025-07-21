@@ -513,6 +513,9 @@ if(Mayo_PostBuildCopyRuntimeDLLs)
     list(APPEND MayoApp_LinkLibraries Qt${QT_VERSION_MAJOR}::Svg)
 endif()
 
+
+aux_source_directory(./src/SARibbonBar A)
+
 if(Mayo_BuildApp)
     add_executable(
         mayo
@@ -524,6 +527,7 @@ if(Mayo_BuildApp)
         images/mayo.qrc
         ${Mayo_RcIconsWin}
         ${Mayo_AppIconMacOS}
+        ${A}
     )
 
     target_compile_definitions(mayo PRIVATE ${Mayo_CompileDefinitions})
