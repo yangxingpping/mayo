@@ -86,6 +86,8 @@ public:
     virtual void setup() = 0;
     virtual void setupHeaderComboBox(QComboBox* cb) = 0;
 
+    bool _newStyle{ true };
+
 protected:
     Theme() = default;
     friend Theme* mayoTheme();

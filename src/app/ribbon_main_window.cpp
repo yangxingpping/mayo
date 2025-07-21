@@ -4,7 +4,7 @@
 ** See license at https://github.com/fougue/mayo/blob/master/LICENSE.txt
 ****************************************************************************/
 
-#include "ribbonmainwindow.h"
+#include "ribbon_main_window.h"
 #include "ui_ribbon_main_window.h"
 
 #include "../base/application.h"
@@ -13,7 +13,7 @@
 #include "../gui/gui_document.h"
 #include "../qtcommon/qstring_conv.h"
 #include "../qtcommon/qtcore_utils.h"
-#include "app_context.h"
+#include "app_context_new.h"
 #include "app_module.h"
 #include "commands_file.h"
 #include "commands_display.h"
@@ -43,16 +43,16 @@
 namespace Mayo {
 
 RibbonMainWindow::RibbonMainWindow(GuiApplication* guiApp, QWidget* parent)
-    : QMainWindow(parent),
+    : SARibbonMainWindow(parent),
       m_guiApp(guiApp),
-      m_ui(new Ui_MainWindow)
+      m_ui(new Ui_RibbonMainWindow)
 {
     m_ui->setupUi(this);
     this->addPage(IAppContext::Page::Home, new WidgetMainHome(this));
     this->addPage(IAppContext::Page::Documents, new WidgetMainControl(guiApp, this));
 
     // AppContext requires WidgetMainControl object, ensure it has been created beforehand
-    m_appContext = new AppContext(this);
+    m_appContext = new AppContextNew(this);
     m_cmdContainer.setAppContext(m_appContext);
 
     // Some commands requires WidgetMainControl UI page to exist, ensure it has been created beforehand
@@ -130,108 +130,12 @@ void RibbonMainWindow::addPage(IAppContext::Page page, IWidgetMainPage* pageWidg
 
 void RibbonMainWindow::createCommands()
 {
-    // "File" commands
-    this->addCommand<CommandNewDocument>();
-    this->addCommand<CommandOpenDocuments>();
-    this->addCommand<CommandRecentFiles>(m_ui->menu_File);
-    this->addCommand<CommandImportInCurrentDocument>();
-    this->addCommand<CommandExportSelectedApplicationItems>();
-    this->addCommand<CommandCloseCurrentDocument>();
-    this->addCommand<CommandCloseAllDocuments>();
-    this->addCommand<CommandCloseAllDocumentsExceptCurrent>();
-    this->addCommand<CommandQuitApplication>();
-
-    // "Display" commands
-    this->addCommand<CommandChangeProjection>();
-    this->addCommand<CommandChangeDisplayMode>(m_ui->menu_Display);
-    this->addCommand<CommandToggleOriginTrihedron>();
-    this->addCommand<CommandTogglePerformanceStats>();
-    this->addCommand<CommandZoomInCurrentDocument>();
-    this->addCommand<CommandZoomOutCurrentDocument>();
-    this->addCommand<CommandTurnViewCounterClockWise>();
-    this->addCommand<CommandTurnViewClockWise>();
-
-    // "Tools" commands
-    this->addCommand<CommandSaveViewImage>();
-    this->addCommand<CommandInspectXde>();
-    this->addCommand<CommandEditOptions>();
-
-    // "Window" commands
-    this->addCommand<CommandLeftSidebarWidgetToggle>();
-    this->addCommand<CommandMainWidgetToggleFullscreen>();
-    this->addCommand<CommandSwitchMainWidgetMode>();
-    this->addCommand<CommandPreviousDocument>();
-    this->addCommand<CommandNextDocument>();
-
-    // "Help" commands
-    this->addCommand<CommandReportBug>();
-    this->addCommand<CommandSystemInformation>();
-    this->addCommand<CommandAbout>();
+    
 }
 
 void RibbonMainWindow::createMenus()
 {
-    // Helper function to add in 'menu' the QAction associated to 'commandName'
-    auto fnAddAction = [=](QMenu* menu, std::string_view commandName) {
-        menu->addAction(m_cmdContainer.findCommandAction(commandName));
-    };
-
-    // TODO Create menu bar programmatically(not hard-code in .ui file)
-
-    {   // File
-        auto menu = m_ui->menu_File;
-        fnAddAction(menu, CommandNewDocument::Name);
-        fnAddAction(menu, CommandOpenDocuments::Name);
-        fnAddAction(menu, CommandRecentFiles::Name);
-        menu->addSeparator();
-        fnAddAction(menu, CommandImportInCurrentDocument::Name);
-        fnAddAction(menu, CommandExportSelectedApplicationItems::Name);
-        menu->addSeparator();
-        fnAddAction(menu, CommandCloseCurrentDocument::Name);
-        fnAddAction(menu, CommandCloseAllDocumentsExceptCurrent::Name);
-        fnAddAction(menu, CommandCloseAllDocuments::Name);
-        menu->addSeparator();
-        fnAddAction(menu, CommandQuitApplication::Name);
-    }
-
-    {   // Display
-        auto menu = m_ui->menu_Display;
-        fnAddAction(menu, CommandChangeProjection::Name);
-        fnAddAction(menu, CommandChangeDisplayMode::Name);
-        fnAddAction(menu, CommandToggleOriginTrihedron::Name);
-        fnAddAction(menu, CommandTogglePerformanceStats::Name);
-        menu->addSeparator();
-        fnAddAction(menu, CommandZoomInCurrentDocument::Name);
-        fnAddAction(menu, CommandZoomOutCurrentDocument::Name);
-        fnAddAction(menu, CommandTurnViewCounterClockWise::Name);
-        fnAddAction(menu, CommandTurnViewClockWise::Name);
-    }
-
-    {   // Tools
-        auto menu = m_ui->menu_Tools;
-        fnAddAction(menu, CommandSaveViewImage::Name);
-        fnAddAction(menu, CommandInspectXde::Name);
-        menu->addSeparator();
-        fnAddAction(menu, CommandEditOptions::Name);
-    }
-
-    {   // Window
-        auto menu = m_ui->menu_Window;
-        fnAddAction(menu, CommandLeftSidebarWidgetToggle::Name);
-        fnAddAction(menu, CommandMainWidgetToggleFullscreen::Name);
-        menu->addSeparator();
-        fnAddAction(menu, CommandSwitchMainWidgetMode::Name);
-        fnAddAction(menu, CommandPreviousDocument::Name);
-        fnAddAction(menu, CommandNextDocument::Name);
-    }
-
-    {   // Help
-        auto menu = m_ui->menu_Help;
-        fnAddAction(menu, CommandReportBug::Name);
-        fnAddAction(menu, CommandSystemInformation::Name);
-        menu->addSeparator();
-        fnAddAction(menu, CommandAbout::Name);
-    }
+    
 }
 
 void RibbonMainWindow::onOperationFinished(bool ok, const QString &msg)
@@ -281,7 +185,7 @@ void RibbonMainWindow::onGuiDocumentErased(GuiDocument* /*guiDoc*/)
 
 // Async execution of a resizable message box dialog
 // Text is also selectable and displayed within a scroll area
-QDialog* runMessageBox(
+QDialog* runMessageBox2(
         QMessageBox::Icon icon,
         QWidget* parentWidget,
         const QString& text,
@@ -357,10 +261,10 @@ void RibbonMainWindow::onMessage(const Messenger::Message& msg)
         WidgetMessageIndicator::showInfo(qtext, this);
         break;
     case MessageType::Warning:
-        runMessageBox(QMessageBox::Warning, this, qtext);
+        runMessageBox2(QMessageBox::Warning, this, qtext);
         break;
     case MessageType::Error:
-        runMessageBox(QMessageBox::Critical, this, qtext);
+        runMessageBox2(QMessageBox::Critical, this, qtext);
         break;
     }
 }

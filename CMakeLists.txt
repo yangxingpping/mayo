@@ -513,6 +513,7 @@ if(Mayo_PostBuildCopyRuntimeDLLs)
     list(APPEND MayoApp_LinkLibraries Qt${QT_VERSION_MAJOR}::Svg)
 endif()
 
+include_directories(./src/SARibbonBar)
 
 aux_source_directory(./src/SARibbonBar A)
 

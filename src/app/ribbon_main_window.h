@@ -14,6 +14,8 @@
 #include <QtWidgets/QMainWindow>
 #include <unordered_map>
 
+#include "SARibbonMainWindow.h"
+
 namespace Mayo {
 
 class GuiApplication;
@@ -24,12 +26,12 @@ class WidgetMainHome;
 
 // Provides the root widget of the application GUI
 // It creates and owns the various available commands(actions)
-class MainWindow : public QMainWindow {
+class RibbonMainWindow : public SARibbonMainWindow {
     Q_OBJECT
-    MAYO_DECLARE_TEXT_ID_FUNCTIONS(Mayo::MainWindow)
+    MAYO_DECLARE_TEXT_ID_FUNCTIONS(Mayo::RibbonMainWindow)
 public:
-    MainWindow(GuiApplication* guiApp, QWidget* parent = nullptr);
-    ~MainWindow();
+    RibbonMainWindow(GuiApplication* guiApp, QWidget* parent = nullptr);
+    ~RibbonMainWindow();
 
     void openDocumentsFromList(Span<const FilePath> listFilePath);
 
@@ -59,13 +61,13 @@ private:
     WidgetMainHome* widgetPageHome() const;
     WidgetMainControl* widgetPageDocuments() const;
 
-    friend class AppContext;
+    friend class AppContextNew;
 
     IAppContext* m_appContext = nullptr;
     GuiApplication* m_guiApp = nullptr;
     CommandContainer m_cmdContainer;
     TaskManager m_taskMgr;
-    class Ui_MainWindow* m_ui = nullptr;
+    class Ui_RibbonMainWindow* m_ui = nullptr;
     std::unordered_map<IAppContext::Page, IWidgetMainPage*> m_mapWidgetPage;
 };
 
