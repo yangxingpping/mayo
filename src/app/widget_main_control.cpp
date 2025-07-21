@@ -147,6 +147,8 @@ void WidgetMainControl::initialize(const CommandContainer* cmdContainer)
 {
     assert(cmdContainer != nullptr);
 
+    return; //TBD
+
     m_appContext = cmdContainer->appContext();
     auto fnFindAction = [=](std::string_view cmdName) {
         QAction* action = cmdContainer->findCommandAction(cmdName);

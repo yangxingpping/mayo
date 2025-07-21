@@ -32,6 +32,7 @@
 #include "document_tree_node_properties_providers.h"
 #include "library_info.h"
 #include "mainwindow.h"
+#include "ribbon_main_window.h"
 #include "qtgui_utils.h"
 #include "theme.h"
 #include "widget_model_tree.h"
@@ -428,12 +429,20 @@ static int runApp(QCoreApplication* qtApp)
     });
 
     // Create MainWindow
-    MainWindow mainWindow(guiApp);
+    /*MainWindow mainWindow(guiApp);
     mainWindow.setWindowTitle(QCoreApplication::applicationName());
     appModule->settings()->loadProperty(&appModule->properties()->appUiState);
     mainWindow.show();
     if (!args.listFilepathToOpen.empty()) {
         QTimer::singleShot(0, qtApp, [&]{ mainWindow.openDocumentsFromList(args.listFilepathToOpen); });
+    }*/
+
+    RibbonMainWindow mainWindow(guiApp);
+    mainWindow.setWindowTitle(QCoreApplication::applicationName());
+    appModule->settings()->loadProperty(&appModule->properties()->appUiState);
+    mainWindow.show();
+    if (!args.listFilepathToOpen.empty()) {
+        QTimer::singleShot(0, qtApp, [&] { mainWindow.openDocumentsFromList(args.listFilepathToOpen); });
     }
 
     appModule->settings()->resetAll();
