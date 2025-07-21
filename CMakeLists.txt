@@ -4,7 +4,10 @@
 #* See license at https://github.com/fougue/mayo/blob/master/LICENSE.txt
 #****************************************************************************
 
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.25)
+
+set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+  CACHE STRING "Vcpkg toolchain file")
 
 set(Mayo_VersionMajor 0)
 set(Mayo_VersionMinor 10)
@@ -92,6 +95,8 @@ option(Mayo_BuildConvCli "Build Mayo CLI converter" ON)
 ##########
 # Qt
 ##########
+
+#find_package(OpenCASCADE CONFIG REQUIRED)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED)
 if(QT_FOUND)
@@ -247,38 +252,19 @@ file(
 # OpenCascade
 ##########
 
-if(WIN32)
-    # Can't use find_package(OpenCASCADE) as OpenCASCADEConfig.cmake is broken for Windows platform
-    # See https://dev.opencascade.org/content/3rdparty-hard-coded-paths-when-building-against-opencascade
-    include(${PROJECT_SOURCE_DIR}/cmake/OpenCascadeWin.cmake)
-    if (OpenCASCADE_FOUND)
-        # Add OpenCASCADE include directory
-        list(APPEND Mayo_IncludeDirectories ${OpenCASCADE_INCLUDE_DIR})
 
-        # Add OpenCASCADE library directories
-        # Note: QtCreator option "Run->Add build library search to PATH" will add to PATH env variable
-        #       the contents of MayoCore_LinkDirectories variable. For convenience, let's add also the
-        #       directories containing DLLs
-        list(
-            APPEND MayoCore_LinkDirectories
-            ${OpenCASCADE_BINARY_DIR}
-            ${OpenCASCADE_LIBRARY_DIR}
-            ${OpenCASCADE_3RDPARTY_BINARY_DIRS}
-        )    
-     endif()
-else()
-    find_package(OpenCASCADE REQUIRED)
-    if(OpenCASCADE_FOUND)
-        # It seems that OpenCascade cmake package files specify INTERFACE_INCLUDE_DIRECTORIES
-        # starting from 7.7.0 version only
-        # Older versions require to explicitly add OpenCascade include dir
-        get_target_property(OpenCASCADE_TKernel_INCLUDE_DIR TKernel INTERFACE_INCLUDE_DIRECTORIES)
-        list(FIND OpenCASCADE_TKernel_INCLUDE_DIR ${OpenCASCADE_INCLUDE_DIR} OpenCASCADE_TKernel_INCLUDE_DIR_IsSet)
-        if(OpenCASCADE_TKernel_INCLUDE_DIR_IsSet EQUAL -1)
-            list(APPEND Mayo_IncludeDirectories ${OpenCASCADE_INCLUDE_DIR})
-        endif()
+find_package(OpenCASCADE REQUIRED)
+if(OpenCASCADE_FOUND)
+    # It seems that OpenCascade cmake package files specify INTERFACE_INCLUDE_DIRECTORIES
+    # starting from 7.7.0 version only
+    # Older versions require to explicitly add OpenCascade include dir
+    get_target_property(OpenCASCADE_TKernel_INCLUDE_DIR TKernel INTERFACE_INCLUDE_DIRECTORIES)
+    list(FIND OpenCASCADE_TKernel_INCLUDE_DIR ${OpenCASCADE_INCLUDE_DIR} OpenCASCADE_TKernel_INCLUDE_DIR_IsSet)
+    if(OpenCASCADE_TKernel_INCLUDE_DIR_IsSet EQUAL -1)
+        list(APPEND Mayo_IncludeDirectories ${OpenCASCADE_INCLUDE_DIR})
     endif()
 endif()
+
 
 list(APPEND Mayo_CompileDefinitions OCCT_HANDLE_NOCAST)
 if(UNIX AND NOT APPLE)

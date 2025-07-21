@@ -4,3 +4,6 @@ build-*
 custom.pri
 env.pri
 cmake/CustomSteps.cmake
+
+/build_win/
+/build/

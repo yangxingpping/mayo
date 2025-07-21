@@ -174,7 +174,7 @@ public:
     {
         const QString urlDown(":/images/themes/classic/indicator-down_8.png");
         const QString urlDownDisabled(":/images/themes/classic/indicator-down-disabled_8.png");
-        cb->setStyleSheet(cssFlatComboBox(urlDown, urlDownDisabled));
+        //cb->setStyleSheet(cssFlatComboBox(urlDown, urlDownDisabled));
     }
 
 private:
@@ -252,6 +252,10 @@ public:
             m_mapIcon.emplace(icn, pix);
         }
 
+		auto styles = QStyleFactory::keys();
+        qApp->setStyle(QStyleFactory::create("Breeze"));
+        return;
+
         qApp->setStyle(QStyleFactory::create("Fusion"));
         QPalette p = qApp->palette();
         p.setColor(QPalette::Base, QColor(80, 80, 80));
@@ -321,7 +325,7 @@ public:
     {
         const QString urlDown(":/images/themes/dark/indicator-down_8.png");
         const QString urlDownDisabled(":/images/themes/classic/indicator-down-disabled_8.png");
-        cb->setStyleSheet(cssFlatComboBox(urlDown, urlDownDisabled));
+        //cb->setStyleSheet(cssFlatComboBox(urlDown, urlDownDisabled));
     }
 
 private:

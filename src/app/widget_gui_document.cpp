@@ -352,7 +352,7 @@ void WidgetGuiDocument::recreateMenuViewProjections(QWidget* container)
         auto menuBtnView = new QMenu(btnViewMenu);
         menuBtnView->setStyle(menuStyle);
         const QString strPanelBkgndColor = this->panelBackgroundColor().name(QColor::HexArgb);
-        menuBtnView->setStyleSheet(QString("QMenu { background:%1; border: 0px }").arg(strPanelBkgndColor));
+        //menuBtnView->setStyleSheet(QString("QMenu { background:%1; border: 0px }").arg(strPanelBkgndColor));
         menuBtnView->setWindowFlags(menuBtnView->windowFlags() | Qt::FramelessWindowHint | Qt::NoDropShadowWindowHint);
         if (m_qtOccView->supportsWidgetOpacity())
             menuBtnView->setAttribute(Qt::WA_TranslucentBackground);

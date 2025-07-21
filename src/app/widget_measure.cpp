@@ -421,11 +421,11 @@ void WidgetMeasure::updateMessagePanel()
                 m_errorMessage.isEmpty() ?
                     Theme::Color::MessageIndicator_InfoBackground :
                     Theme::Color::MessageIndicator_ErrorBackground;
-        labelMessage->setStyleSheet(
+        /*labelMessage->setStyleSheet(
                     QString("QLabel { color: %1; background-color: %2 }")
                     .arg(mayoTheme()->color(msgTextColorRole).name(),
                          mayoTheme()->color(msgBackgroundColorRole).name())
-        );
+        );*/
         const QString msg = m_errorMessage.isEmpty() ? tr("Select entities to measure") : m_errorMessage;
         labelMessage->setText(msg);
     }
