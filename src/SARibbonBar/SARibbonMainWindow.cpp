@@ -97,7 +97,7 @@ void SARibbonMainWindow::setRibbonTheme(SARibbonMainWindow::RibbonTheme theme)
         break;
 
     case Office2013:
-        loadTheme(":/theme/resource/office2013.qss");
+        loadTheme(":/themes/office2013.qss");
         break;
 
     default:

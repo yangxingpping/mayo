@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/images">
+    <qresource prefix="/">
         <file>appicon_128.png</file>
         <file>appicon_16.png</file>
         <file>appicon_24.png</file>
@@ -82,5 +82,21 @@
         <file>themes/dark/turn-cw.svg</file>
         <file>themes/classic/grid.svg</file>
         <file>themes/dark/grid.svg</file>
+        <file>themes/ArrowDown.png</file>
+        <file>themes/ArrowMore.png</file>
+        <file>themes/ArrowUp.png</file>
+        <file>themes/close.png</file>
+        <file>themes/default.qss</file>
+        <file>themes/maximize.png</file>
+        <file>themes/minimize.png</file>
+        <file>themes/office2013.qss</file>
+        <file>themes/ribbonPannelOptionButton.png</file>
+        <file>themes/Titlebar_Close.png</file>
+        <file>themes/Titlebar_Close_Hover.png</file>
+        <file>themes/Titlebar_Max.png</file>
+        <file>themes/Titlebar_Min.png</file>
+        <file>themes/Titlebar_Normal.png</file>
+        <file>themes/Titlebar_Shade.png</file>
+        <file>themes/Titlebar_Unshade.png</file>
     </qresource>
 </RCC>

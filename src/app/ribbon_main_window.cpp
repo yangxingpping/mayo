@@ -28,6 +28,8 @@
 #include "widget_main_home.h"
 #include "widget_message_indicator.h"
 
+#include "SARibbonBar.h"
+
 #ifdef Q_OS_WIN
 #  include "windows/win_taskbar_global_progress.h"
 #endif
@@ -136,7 +138,31 @@ void RibbonMainWindow::createCommands()
 
 void RibbonMainWindow::createMenus()
 {
-    
+
+    SARibbonBar* ribbon = this->ribbonBar();
+    ribbon->setRibbonStyle(SARibbonBar::WpsLiteStyleTwoRow);
+  
+	auto categoryMain = ribbon->addCategoryPage(QStringLiteral("Main"));
+	auto FilePannel = categoryMain->addPannel(QStringLiteral("FilePannel"));
+
+	auto c2 = ribbon->addCategoryPage(QStringLiteral("Tool"));
+	auto fp = c2->addPannel(QStringLiteral(""));
+
+    auto btn1 = new QAction("hello", this);
+	auto bb = fp->addMediumAction(btn1);
+    bb->setArrowType(Qt::DownArrow);
+    //bb->setFixedWidth(100);
+
+    btn1 = new QAction("world", this);
+    QIcon icon36;
+    icon36.addFile(QString::fromUtf8(":/images/appicon_64.png"), QSize(8,8), QIcon::Normal,
+        QIcon::On);
+	btn1->setIcon(icon36);
+
+    auto cc = fp->addLargeAction(btn1);
+    cc->setFixedWidth(100);
+
+    //bb->setStyleSheet("hover:{background-color: yellow;}");
 }
 
 void RibbonMainWindow::onOperationFinished(bool ok, const QString &msg)
