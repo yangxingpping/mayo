@@ -437,20 +437,40 @@ static int runApp(QCoreApplication* qtApp)
         QTimer::singleShot(0, qtApp, [&]{ mainWindow.openDocumentsFromList(args.listFilepathToOpen); });
     }*/
 
-    RibbonMainWindow mainWindow(guiApp);
-    mainWindow.setWindowTitle(QCoreApplication::applicationName());
-    appModule->settings()->loadProperty(&appModule->properties()->appUiState);
-    mainWindow.show();
-    if (!args.listFilepathToOpen.empty()) {
-        QTimer::singleShot(0, qtApp, [&] { mainWindow.openDocumentsFromList(args.listFilepathToOpen); });
-    }
+    if (globalTheme->_newStyle)
+    {
+        RibbonMainWindow mainWindow(guiApp);
+        mainWindow.setWindowTitle(QCoreApplication::applicationName());
+        appModule->settings()->loadProperty(&appModule->properties()->appUiState);
+        mainWindow.show();
+        if (!args.listFilepathToOpen.empty()) {
+            QTimer::singleShot(0, qtApp, [&] { mainWindow.openDocumentsFromList(args.listFilepathToOpen); });
+        }
 
-    appModule->settings()->resetAll();
-    fnLoadAppSettings(appModule->settings());
-    const int code = qtApp->exec();
-    appModule->recordRecentFiles(guiApp);
-    appModule->settings()->save();
-    return code;
+        appModule->settings()->resetAll();
+        fnLoadAppSettings(appModule->settings());
+        const int code = qtApp->exec();
+        appModule->recordRecentFiles(guiApp);
+        appModule->settings()->save();
+        return code;
+    }
+    else
+    {
+        MainWindow mainWindow(guiApp);
+        mainWindow.setWindowTitle(QCoreApplication::applicationName());
+        appModule->settings()->loadProperty(&appModule->properties()->appUiState);
+        mainWindow.show();
+        if (!args.listFilepathToOpen.empty()) {
+            QTimer::singleShot(0, qtApp, [&] { mainWindow.openDocumentsFromList(args.listFilepathToOpen); });
+        }
+
+        appModule->settings()->resetAll();
+        fnLoadAppSettings(appModule->settings());
+        const int code = qtApp->exec();
+        appModule->recordRecentFiles(guiApp);
+        appModule->settings()->save();
+        return code;
+    }
 }
 
 } // namespace Mayo

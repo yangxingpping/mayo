@@ -133,7 +133,43 @@ void RibbonMainWindow::addPage(IAppContext::Page page, IWidgetMainPage* pageWidg
 
 void RibbonMainWindow::createCommands()
 {
-    
+    // "File" commands
+    this->addCommand<CommandNewDocument>();
+    this->addCommand<CommandOpenDocuments>();
+    //this->addCommand<CommandRecentFiles>(m_ui->menu_File);
+    this->addCommand<CommandImportInCurrentDocument>();
+    this->addCommand<CommandExportSelectedApplicationItems>();
+    this->addCommand<CommandCloseCurrentDocument>();
+    this->addCommand<CommandCloseAllDocuments>();
+    this->addCommand<CommandCloseAllDocumentsExceptCurrent>();
+    this->addCommand<CommandQuitApplication>();
+
+    // "Display" commands
+    this->addCommand<CommandChangeProjection>();
+    //this->addCommand<CommandChangeDisplayMode>(m_ui->menu_Display);
+    this->addCommand<CommandToggleOriginTrihedron>();
+    this->addCommand<CommandTogglePerformanceStats>();
+    this->addCommand<CommandZoomInCurrentDocument>();
+    this->addCommand<CommandZoomOutCurrentDocument>();
+    this->addCommand<CommandTurnViewCounterClockWise>();
+    this->addCommand<CommandTurnViewClockWise>();
+
+    // "Tools" commands
+    this->addCommand<CommandSaveViewImage>();
+    this->addCommand<CommandInspectXde>();
+    this->addCommand<CommandEditOptions>();
+
+    // "Window" commands
+    this->addCommand<CommandLeftSidebarWidgetToggle>();
+    this->addCommand<CommandMainWidgetToggleFullscreen>();
+    this->addCommand<CommandSwitchMainWidgetMode>();
+    this->addCommand<CommandPreviousDocument>();
+    this->addCommand<CommandNextDocument>();
+
+    // "Help" commands
+    this->addCommand<CommandReportBug>();
+    this->addCommand<CommandSystemInformation>();
+    this->addCommand<CommandAbout>();
 }
 
 void RibbonMainWindow::createMenus()
@@ -142,30 +178,83 @@ void RibbonMainWindow::createMenus()
     SARibbonBar* ribbon = this->ribbonBar();
     ribbon->setRibbonStyle(SARibbonBar::WpsLiteStyleTwoRow);
   
-	auto categoryMain = ribbon->addCategoryPage(QStringLiteral("Main"));
-	auto FilePannel = categoryMain->addPannel(QStringLiteral("FilePannel"));
+	auto c1 = ribbon->addCategoryPage(QStringLiteral("File"));
+	auto f1 = c1->addPannel(QStringLiteral(""));
 
-	auto c2 = ribbon->addCategoryPage(QStringLiteral("Tool"));
-	auto fp = c2->addPannel(QStringLiteral(""));
+    auto c2 = ribbon->addCategoryPage(QStringLiteral("Display"));
+    auto f2 = c2->addPannel(QStringLiteral(""));
 
-    auto btn1 = new QAction("hello", this);
-	auto bb = fp->addSmallAction(btn1);
-    bb->setArrowType(Qt::DownArrow);
-    //bb->setFixedWidth(100);
+    auto c3 = ribbon->addCategoryPage(QStringLiteral("Tool"));
+    auto f3 = c3->addPannel(QStringLiteral(""));
 
-    btn1 = new QAction("world", this);
-    QIcon icon36;
-    icon36.addFile(QString::fromUtf8(":/appicon_64.png"), QSize(), QIcon::Normal,
-        QIcon::On);
-	btn1->setIcon(icon36);
+    auto c4 = ribbon->addCategoryPage(QStringLiteral("Window"));
+    auto f4 = c4->addPannel(QStringLiteral(""));
 
-    auto cc = fp->addLargeAction(btn1);
-    cc->setFixedWidth(100);
+    auto c5 = ribbon->addCategoryPage(QStringLiteral("Help"));
+    auto f5 = c5->addPannel(QStringLiteral(""));
 
-	auto c3 = ribbon->addCategoryPage(QStringLiteral("View"));
-	auto c4 = ribbon->addCategoryPage(QStringLiteral("Help"));
+    // Helper function to add in 'menu' the QAction associated to 'commandName'
+    auto fnAddAction = [=](SARibbonPannel* menu, std::string_view commandName) {
+        auto cmd = m_cmdContainer.findCommand(commandName);
+        menu->addLargeAction(m_cmdContainer.findCommandAction(commandName));
+        };
 
-    //bb->setStyleSheet("hover:{background-color: yellow;}");
+    // TODO Create menu bar programmatically(not hard-code in .ui file)
+
+    {   // File
+        auto menu = f1;
+        fnAddAction(menu, CommandNewDocument::Name);
+        fnAddAction(menu, CommandOpenDocuments::Name);
+        fnAddAction(menu, CommandRecentFiles::Name);
+        menu->addSeparator();
+        fnAddAction(menu, CommandImportInCurrentDocument::Name);
+        fnAddAction(menu, CommandExportSelectedApplicationItems::Name);
+        menu->addSeparator();
+        fnAddAction(menu, CommandCloseCurrentDocument::Name);
+        fnAddAction(menu, CommandCloseAllDocumentsExceptCurrent::Name);
+        fnAddAction(menu, CommandCloseAllDocuments::Name);
+        menu->addSeparator();
+        fnAddAction(menu, CommandQuitApplication::Name);
+    }
+
+    {   // Display
+        auto menu = f2;
+        fnAddAction(menu, CommandChangeProjection::Name);
+        fnAddAction(menu, CommandChangeDisplayMode::Name);
+        fnAddAction(menu, CommandToggleOriginTrihedron::Name);
+        fnAddAction(menu, CommandTogglePerformanceStats::Name);
+        menu->addSeparator();
+        fnAddAction(menu, CommandZoomInCurrentDocument::Name);
+        fnAddAction(menu, CommandZoomOutCurrentDocument::Name);
+        fnAddAction(menu, CommandTurnViewCounterClockWise::Name);
+        fnAddAction(menu, CommandTurnViewClockWise::Name);
+    }
+
+    {   // Tools
+        auto menu = f3;
+        fnAddAction(menu, CommandSaveViewImage::Name);
+        fnAddAction(menu, CommandInspectXde::Name);
+        menu->addSeparator();
+        fnAddAction(menu, CommandEditOptions::Name);
+    }
+
+    {   // Window
+        auto menu = f4;
+        fnAddAction(menu, CommandLeftSidebarWidgetToggle::Name);
+        fnAddAction(menu, CommandMainWidgetToggleFullscreen::Name);
+        menu->addSeparator();
+        fnAddAction(menu, CommandSwitchMainWidgetMode::Name);
+        fnAddAction(menu, CommandPreviousDocument::Name);
+        fnAddAction(menu, CommandNextDocument::Name);
+    }
+
+    {   // Help
+        auto menu = f5;
+        fnAddAction(menu, CommandReportBug::Name);
+        fnAddAction(menu, CommandSystemInformation::Name);
+        menu->addSeparator();
+        fnAddAction(menu, CommandAbout::Name);
+    }
 }
 
 void RibbonMainWindow::onOperationFinished(bool ok, const QString &msg)
