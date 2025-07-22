@@ -121,9 +121,10 @@ const QLocale& AppModule::qtLocale() const
 const Enumeration& AppModule::languages()
 {
     static const Enumeration langs = {
-        { 0, AppModule::textId("en") },
+        { 0, AppModule::textId("zh") },
+        { 2, AppModule::textId("en") },
         { 1, AppModule::textId("fr") },
-        { 2, AppModule::textId("zh") },
+        
     };
     return langs;
 }

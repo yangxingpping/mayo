@@ -244,8 +244,8 @@ public:
                         ":/images/themes/classic/";
             QPixmap pix(icnBasePath + icnFileName);
             if (!fnIsNeutralIcon(icn)) {
-                const bool invertColors = icn != Icon::XdeAssembly && icn != Icon::XdeSimpleShape;
-                if (invertColors)
+                /*const bool invertColors = icn != Icon::XdeAssembly && icn != Icon::XdeSimpleShape;
+                if (invertColors)*/
                     pix = invertedPixmap(pix);
             }
 

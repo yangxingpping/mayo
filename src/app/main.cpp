@@ -362,8 +362,9 @@ static int runApp(QCoreApplication* qtApp)
             else
                 qWarning() << Main::tr("Failed to load translation file [path=%1]").arg(qmFilePath);
         };
-        const QString appLangCode = appModule->languageCode();
+        const QString appLangCode = "zh";//appModule->languageCode();
         fnLoadQmFile(QString(":/i18n/mayo_%1.qm").arg(appLangCode));
+        fnLoadQmFile(QString(":/i18n/i18n_%1.qm").arg(appLangCode));
         fnLoadQmFile(QString(":/i18n/qtbase_%1.qm").arg(appLangCode));
     }
 

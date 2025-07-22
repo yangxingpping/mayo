@@ -64,7 +64,7 @@ RibbonMainWindow::RibbonMainWindow(GuiApplication* guiApp, QWidget* parent)
     // WidgetMainControl page depends on some Command objects, ensure they have been created beforehand
     for (auto [code, page] : m_mapWidgetPage)
     {
-        //page->initialize(&m_cmdContainer); TBD
+        page->initialize(&m_cmdContainer);
     }
     AppModule::get()->signalMessage.connectSlot(&RibbonMainWindow::onMessage, this);
     guiApp->signalGuiDocumentAdded.connectSlot(&RibbonMainWindow::onGuiDocumentAdded, this);
@@ -196,7 +196,7 @@ void RibbonMainWindow::createMenus()
     // Helper function to add in 'menu' the QAction associated to 'commandName'
     auto fnAddAction = [=](SARibbonPannel* menu, std::string_view commandName) {
         auto cmd = m_cmdContainer.findCommand(commandName);
-        menu->addLargeAction(m_cmdContainer.findCommandAction(commandName));
+        menu->addMediumAction(m_cmdContainer.findCommandAction(commandName));
         };
 
     // TODO Create menu bar programmatically(not hard-code in .ui file)
