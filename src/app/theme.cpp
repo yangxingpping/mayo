@@ -240,14 +240,14 @@ public:
             const QString icnFileName = iconFileName(icn);
             const QString icnBasePath =
                     !fnIsNeutralIcon(icn) ?
-                        ":/images/themes/dark/" :
-                        ":/images/themes/classic/";
-            QPixmap pix(icnBasePath + icnFileName);
-            if (!fnIsNeutralIcon(icn)) {
+                        ":/themes/dark/" :
+                        ":/themes/classic/";
+        	QPixmap pix(icnBasePath + icnFileName);
+            //if (!fnIsNeutralIcon(icn)) {
                 /*const bool invertColors = icn != Icon::XdeAssembly && icn != Icon::XdeSimpleShape;
                 if (invertColors)*/
-                    pix = invertedPixmap(pix);
-            }
+                    //pix = invertedPixmap(pix);
+            //}
 
             m_mapIcon.emplace(icn, pix);
         }
