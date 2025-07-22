@@ -69,6 +69,8 @@ private:
     TaskManager m_taskMgr;
     class Ui_RibbonMainWindow* m_ui = nullptr;
     std::unordered_map<IAppContext::Page, IWidgetMainPage*> m_mapWidgetPage;
+
+    QMenu* menuFile{ nullptr };
 };
 
 } // namespace Mayo

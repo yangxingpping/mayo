@@ -64,6 +64,7 @@ SARibbonApplicationButton {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
   background-color: #2b579a;
+  
 }
 
 SARibbonApplicationButton::hover {
@@ -71,7 +72,7 @@ SARibbonApplicationButton::hover {
 }
 
 SARibbonApplicationButton::pressed {
-  background-color: #3369b9;
+  background-color: #3369b9; 
 }
 
 SARibbonApplicationButton:focus {
@@ -127,7 +128,7 @@ SARibbonTabBar::tab:!selected {
 
 SARibbonToolButton {
   border: 1px solid transparent;
-  color: #333;
+  color: #000;
   background-color: white;
 }
 

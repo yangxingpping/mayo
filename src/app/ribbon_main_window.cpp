@@ -177,7 +177,34 @@ void RibbonMainWindow::createMenus()
 
     SARibbonBar* ribbon = this->ribbonBar();
     ribbon->setRibbonStyle(SARibbonBar::WpsLiteStyleTwoRow);
-  
+
+
+    QPushButton* filebutton = dynamic_cast<QPushButton*>(ribbon->applicationButton());
+    menuFile = new QMenu(this);
+    {
+        filebutton->setText(QObject::tr("File"));
+        /*menuFile->addAction(actionNew);
+        menuFile->addAction(actionOpen);
+        menuFile->addAction(actionClose);
+        menuFile->addSeparator();
+        menuFile->addAction(actionImportMesh);
+        menuFile->addAction(actionExportMesh);
+        menuFile->addAction(actionImportGeometry);
+        menuFile->addAction(actionExportGeometry);
+        menuFile->addSeparator();
+        menuFile->addAction(actionSave);
+        menuFile->addAction(actionSaveAs);
+        menuFile->addSeparator();
+        menuFile->addAction(actionSave_Script);
+        menuFile->addAction(actionExecute_Script);
+        menuFile->addSeparator();
+        menuFile->addAction(actionSave_Picture);
+        menuFile->addAction(actionWorkingDir);
+        menuFile->addSeparator();*/
+        filebutton->setMenu(menuFile);
+    }
+
+
 	auto c1 = ribbon->addCategoryPage(QStringLiteral("File"));
 	auto f1 = c1->addPannel(QStringLiteral(""));
 
@@ -199,7 +226,11 @@ void RibbonMainWindow::createMenus()
         menu->addMediumAction(m_cmdContainer.findCommandAction(commandName));
         };
 
-    // TODO Create menu bar programmatically(not hard-code in .ui file)
+    auto v1 = m_cmdContainer.findCommand(CommandNewDocument::Name);
+	menuFile->addAction(v1->action());
+    menuFile->addSeparator();
+    auto v2 = m_cmdContainer.findCommand(CommandOpenDocuments::Name);
+    menuFile->addAction(v2->action());
 
     {   // File
         auto menu = f1;
